@@ -1,0 +1,119 @@
+/* --- Market-Electric: E-commerce Inspired Admin Theme --- */
+
+:root {
+  /* Core Tones */
+  --theme-bg: #f1f3f6;              /* Soft Flipkart-style background */
+  --theme-elevation-0: #f1f3f6;
+  --theme-elevation-50: #ffffff;    /* Pure white for cards */
+  --theme-elevation-100: #e0e0e0;
+  
+  /* Brand Colors */
+  --theme-primary-500: #2874f0;     /* Vibrant Blue */
+  --theme-primary-600: #1259cc;
+  
+  /* Text & Success */
+  --theme-text: #212121;            /* Deep black for visible text */
+  --theme-success-500: #388e3c;     /* Standard green for status */
+  
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* --- The Electric Grid (Blueprint Overlay) --- */
+.template-default__wrap {
+  background-color: var(--theme-bg);
+  background-image: 
+    linear-gradient(#2874f008 1px, transparent 1px),
+    linear-gradient(90deg, #2874f008 1px, transparent 1px);
+  background-size: 35px 35px;
+  background-attachment: fixed;
+}
+
+/* --- Sidebar: Professional & Colorful --- */
+.nav {
+  background-color: var(--theme-primary-500);        /* White sidebar for an "App" feel */
+  border-right: 1px solid #dbdbdb;
+
+  .nav__link {
+    color: #ffffff;
+    font-weight: 500;
+    margin: 4px 12px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #f0f5ff;
+      color: var(--theme-success-500);
+    }
+
+    &--active {
+      background-color: #2874f0;    /* Active blue */
+      color: #ffffff !important;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(40, 116, 240, 0.2);
+    }
+  }
+
+  /* --- Navigation Footer & Logout --- */
+  
+
+  .nav__account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .nav__user {
+      color: #666;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+}
+.nav-group__label{
+color: #dbdbdb;
+
+&:hover {
+    color: #212121;
+}
+}
+}
+.nav__log-out {
+  background-color: #fb641b !important; /* Orange Logout */
+  color: #ffffff !important;
+  padding: 6px;
+  border-radius: 2px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 2px 4px rgba(251, 100, 27, 0.2);
+  
+  &:hover {
+    background-color: #e65100 !important;
+    box-shadow: 0 4px 8px rgba(251, 100, 27, 0.3);
+  }
+}
+
+/* --- High-Action Buttons --- */
+.btn--style-primary {
+  background-color: #fb641b !important; /* Orange Primary */
+  color: #ffffff !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: none;
+  
+  &:hover {
+    background-color: #ff9f00 !important; /* Shifts to Gold on hover */
+    transform: translateY(-1px);
+  }
+}
+
+/* --- Product Tables --- */
+.table {
+  border: 1px solid #dbdbdb;
+  
+  thead th {
+    background-color: #2874f0;      /* Blue headers */
+    color: #ffffff;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+}
