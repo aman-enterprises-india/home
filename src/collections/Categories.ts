@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import { slugField, type CollectionConfig } from "payload";
 import { formatSlug } from "../app/hooks/formatSlug";
 
 export const Categories: CollectionConfig = {
@@ -17,19 +17,9 @@ export const Categories: CollectionConfig = {
       required: true,
       unique: true, // Prevents duplicate categories
     },
-    {
-      name: "slug",
-      type: "text", // In Payload 3.0, you can use a hook to auto-generate this
-      required: true,
-      unique: true,
-      admin: {
-        position: "sidebar",
-        description: "Used in the URL (e.g., ht-panels)",
-      },
-      hooks: {
-        beforeValidate: [formatSlug("title")],
-      },
-    },
+    slugField({
+      useAsSlug: "name",
+    }),
     {
       name: "description",
       type: "textarea",

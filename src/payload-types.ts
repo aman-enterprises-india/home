@@ -176,6 +176,10 @@ export interface Media {
 export interface Product {
   id: number;
   title: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
   slug: string;
   category: number | Category;
   /**
@@ -197,6 +201,7 @@ export interface Product {
     };
     [k: string]: unknown;
   };
+  featured?: boolean | null;
   images?:
     | {
         image: number | Media;
@@ -229,8 +234,9 @@ export interface Category {
   id: number;
   name: string;
   /**
-   * Used in the URL (e.g., ht-panels)
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
+  generateSlug?: boolean | null;
   slug: string;
   description?: string | null;
   image?: (number | null) | Media;
@@ -390,10 +396,12 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface ProductsSelect<T extends boolean = true> {
   title?: T;
+  generateSlug?: T;
   slug?: T;
   category?: T;
   price?: T;
   description?: T;
+  featured?: T;
   images?:
     | T
     | {
@@ -423,6 +431,7 @@ export interface ProductsSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   name?: T;
+  generateSlug?: T;
   slug?: T;
   description?: T;
   image?: T;
@@ -495,6 +504,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface CompanySetting {
   id: number;
   siteTitle: string;
+  GSTNo?: string | null;
   contactInfo?: {
     phone?: string | null;
     email?: string | null;
@@ -516,6 +526,7 @@ export interface CompanySetting {
  */
 export interface CompanySettingsSelect<T extends boolean = true> {
   siteTitle?: T;
+  GSTNo?: T;
   contactInfo?:
     | T
     | {

@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import { slugField, type CollectionConfig } from "payload";
 import { formatSlug } from "../app/hooks/formatSlug";
 
 export const Products: CollectionConfig = {
@@ -17,18 +17,9 @@ export const Products: CollectionConfig = {
       type: "text",
       required: true,
     },
-    {
-      name: "slug",
-      type: "text",
-      unique: true,
-      required: true,
-      admin: {
-        position: "sidebar",
-      },
-      hooks: {
-        beforeValidate: [formatSlug("title")],
-      },
-    },
+    slugField({
+      useAsSlug: "title",
+    }),
     {
       name: "category",
       type: "relationship",
@@ -49,6 +40,10 @@ export const Products: CollectionConfig = {
       name: "description",
       type: "richText", // Uses the modern Lexical editor by default
       required: true,
+    },
+    {
+      name: "featured",
+      type: "checkbox",
     },
     {
       name: "images",
