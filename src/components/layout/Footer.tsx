@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Zap, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 interface SocialLink {
     platform?: 'LinkedIn' | 'Twitter' | 'Facebook' | 'YouTube' | null;
@@ -37,8 +38,8 @@ export function Footer({
                     {/* Company Info */}
                     <div className="space-y-4">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                                <Zap className="h-5 w-5 text-primary-foreground" />
+                            <div className="flex h-9 w-9 items-center justify-center rounded-lg">
+                                <Image src='/assets/logo.png' alt="logo" width={100} height={100} />
                             </div>
                             <span className="text-lg font-bold">{companyName}</span>
                         </Link>

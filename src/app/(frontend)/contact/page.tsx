@@ -6,6 +6,8 @@ import { Textarea } from "@/src/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { getPayload } from "payload";
+import config from '@payload-config';
 
 export const metadata: Metadata = {
     title: "Contact Us",
@@ -13,16 +15,12 @@ export const metadata: Metadata = {
         "Get in touch with us for inquiries, quotes, and support. We're here to help with all your electrical product needs.",
 };
 
-interface CompanyInfo {
-    companyName?: string;
-    phone?: string[];
-    email?: string;
-    address?: string;
-    socialLinks?: { platform: string; url: string }[];
-}
-
 export default async function ContactPage() {
-    const companyInfo = ''
+    const payload = await getPayload({ config });
+
+    const companyInfo = await payload.findGlobal({
+        slug: 'company-settings',
+    })
 
     return (
         <div className="py-12">
@@ -158,7 +156,7 @@ export default async function ContactPage() {
                             <CardContent className="space-y-4">
                                 {companyInfo ? (
                                     <>
-                                        {Array.isArray(companyInfo.phone) && companyInfo.phone.length > 0 && (
+                                        {companyInfo?.contactInfo?.phone.length > 0 && (
                                             <div className="flex items-start gap-3">
                                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                                                     <Phone className="h-5 w-5" />
@@ -166,7 +164,7 @@ export default async function ContactPage() {
                                                 <div>
                                                     <p className="font-medium">Phone</p>
                                                     <div className="text-sm text-muted-foreground space-y-1">
-                                                        {companyInfo.phone.map((p, i) => (
+                                                        {companyInfo?.contactInfo?.phone?.split(',').map((p, i) => (
                                                             <a
                                                                 key={i}
                                                                 href={`tel:${p}`}
@@ -180,7 +178,7 @@ export default async function ContactPage() {
                                             </div>
                                         )}
 
-                                        {companyInfo?.email && (
+                                        {companyInfo?.contactInfo?.email && (
                                             <div className="flex items-start gap-3">
                                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                                                     <Mail className="h-5 w-5" />
@@ -188,16 +186,16 @@ export default async function ContactPage() {
                                                 <div>
                                                     <p className="font-medium">Email</p>
                                                     <a
-                                                        href={`mailto:${companyInfo.email}`}
+                                                        href={`mailto:${companyInfo?.contactInfo?.email}`}
                                                         className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                                                     >
-                                                        {companyInfo.email}
+                                                        {companyInfo.contactInfo.email}
                                                     </a>
                                                 </div>
                                             </div>
                                         )}
 
-                                        {companyInfo?.address && (
+                                        {companyInfo?.contactInfo?.address && (
                                             <div className="flex items-start gap-3">
                                                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                                                     <MapPin className="h-5 w-5" />
@@ -205,7 +203,7 @@ export default async function ContactPage() {
                                                 <div>
                                                     <p className="font-medium">Address</p>
                                                     <p className="text-sm text-muted-foreground whitespace-pre-line">
-                                                        {companyInfo?.address}
+                                                        {companyInfo?.contactInfo.address}
                                                     </p>
                                                 </div>
                                             </div>
@@ -250,9 +248,9 @@ export default async function ContactPage() {
                                         Watch product videos
                                     </Link>
                                 </Button>
-                                {companyInfo?.phone && companyInfo.phone.length > 0 && (
+                                {companyInfo?.contactInfo?.phone && companyInfo?.contactInfo?.phone.length > 0 && (
                                     <Button asChild className="w-full">
-                                        <a href={`tel:${companyInfo.phone[0]}`}>
+                                        <a href={`tel:${companyInfo?.contactInfo.phone.split(',')[0]}`}>
                                             <Phone className="mr-2 h-4 w-4" />
                                             Call Now
                                         </a>
@@ -272,7 +270,7 @@ export default async function ContactPage() {
                                         {companyInfo.socialLinks.map((social, i) => (
                                             <Button key={i} asChild variant="outline" size="sm">
                                                 <a
-                                                    href={social.url}
+                                                    href={social.url || "#"}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                 >

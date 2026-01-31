@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, Zap } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
     Sheet,
@@ -11,6 +11,7 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/src/components/ui/sheet";
+import Image from "next/image";
 
 const navLinks = [
     { href: "/", label: "Home" },
@@ -31,8 +32,8 @@ export function Header({ companyName = "Aman Enterprises" }: HeaderProps) {
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary">
-                        <Zap className="h-5 w-5 text-primary-foreground" />
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg">
+                        <Image src='/assets/logo.png' alt="logo" width={100} height={100} />
                     </div>
                     <span className="text-lg font-bold tracking-tight">{companyName}</span>
                 </Link>
@@ -64,7 +65,7 @@ export function Header({ companyName = "Aman Enterprises" }: HeaderProps) {
                     <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                         <SheetHeader>
                             <SheetTitle className="flex items-center gap-2">
-                                <Zap className="h-5 w-5 text-primary" />
+                                <Image src='/assets/logo.png' alt="logo" width={100} height={100} />
                                 {companyName}
                             </SheetTitle>
                         </SheetHeader>

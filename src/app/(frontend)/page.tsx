@@ -5,6 +5,7 @@ import { CategoryCard } from "@/src/components/CategoryCard";
 import { ArrowRight, Zap, Shield, Truck, Phone } from "lucide-react";
 import { getPayload } from "payload";
 import config from '@payload-config';
+import DotGrid from "@/components/DotGrid";
 
 const features = [
   {
@@ -52,13 +53,26 @@ export default async function HomePage() {
     <div className="flex flex-col">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-primary/5 via-background to-primary/10 py-20 md:py-32">
-        <div className="container mx-auto px-4">
+        <div className="absolute inset-0 z-0 w-full opacity-50">
+          <DotGrid
+            dotSize={6}
+            gap={16}
+            baseColor="#bcbabf"
+            activeColor="#1f71f4"
+            proximity={120}
+            shockRadius={250}
+            shockStrength={5}
+            resistance={750}
+            returnDuration={1.5}
+          />
+        </div>
+        <div className="container mx-auto px-4 relative z-10">
           <div className="mx-auto max-w-3xl text-center">
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
               Quality Electrical Products for{" "}
               <span className="text-primary">Every Need</span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground">
+            <p className="mt-6 text-lg text-zinc-400 text-shadow-accent">
               Your trusted partner for premium electrical products, wires, cables,
               and accessories. We deliver quality and reliability you can count on.
             </p>
