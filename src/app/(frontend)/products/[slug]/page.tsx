@@ -10,6 +10,7 @@ import { ProductCard } from "@/src/components/ProductCard";
 import { ArrowLeft, Phone, Package } from "lucide-react";
 import { getPayload } from "payload";
 import config from '@payload-config';
+import Gallery from "@/src/components/Gallery";
 
 interface ProductPageProps {
     params: Promise<{ slug: string }>;
@@ -76,47 +77,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
 
                 <div className="grid gap-8 lg:grid-cols-2">
-                    {/* Product Images */}
-                    <div className="space-y-4">
-                        {/* Main Image */}
-                        <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-muted">
-                            {mainImage ? (
-                                <Image
-                                    src={mainImage}
-                                    alt={product?.title}
-                                    fill
-                                    className="object-cover"
-                                    priority
-                                    sizes="(max-width: 768px) 100vw, 50vw"
-                                />
-                            ) : (
-                                <div className="flex h-full w-full items-center justify-center text-muted-foreground">
-                                    <Package className="h-24 w-24" />
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Thumbnail Gallery */}
-                        {product?.images && product?.images.length > 1 && (
-                            <div className="grid grid-cols-4 gap-2">
-                                {product?.images.map((image, index) => (
-                                    <div
-                                        key={index}
-                                        className="relative aspect-square overflow-hidden rounded-md bg-muted"
-                                    >
-                                        <Image
-                                            src={image?.image?.url}
-                                            alt={`${product?.title} - Image ${index + 1}`}
-                                            fill
-                                            className="object-cover"
-                                            sizes="100px"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
+                    <Gallery title={product?.title} images={product?.images} />
                     {/* Product Details */}
                     <div className="space-y-6">
                         {product?.category && (
@@ -190,19 +151,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         </div>
                     </div>
                 </div>
-
-                {/* Related Products */}
-                {/* {relatedProducts.length > 0 && (
-                    <section className="mt-16">
-                        <Separator className="mb-8" />
-                        <h2 className="text-2xl font-bold mb-6">Related Products</h2>
-                        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                            {relatedProducts.map((product) => (
-                                <ProductCard key={product._id} product={product} />
-                            ))}
-                        </div>
-                    </section>
-                )} */}
             </div>
         </div>
     );

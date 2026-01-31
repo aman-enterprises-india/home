@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { VideoCard } from "@/src/components/VideoCard";
 import { Play } from "lucide-react";
+import { getPayload } from "payload";
+import config from '@payload-config';
 
 export const metadata: Metadata = {
     title: "Videos",
@@ -8,17 +10,17 @@ export const metadata: Metadata = {
         "Watch our product videos, tutorials, and demonstrations for electrical products.",
 };
 
-interface Video {
-    _id: string;
-    title: string;
-    videoUrl: string;
-    thumbnail?: { asset: { _ref: string } };
-    description?: string;
-    product?: { _id: string; title: string; slug: string };
-}
 
 export default async function VideosPage() {
-    const videos = ''
+    const payload = await getPayload({ config });
+
+    const videoRes = await payload.find({
+        collection: 'videos',
+        depth: 1,
+        sort: '-craetedAt',
+    });
+
+    const videos = videoRes.docs;
 
     return (
         <div className="py-12">
@@ -35,7 +37,7 @@ export default async function VideosPage() {
                 {videos && videos.length > 0 ? (
                     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {videos.map((video) => (
-                            <VideoCard key={video._id} video={video} />
+                            <VideoCard key={video.id} url={video.url} title={video.title} description={video.description} />
                         ))}
                     </div>
                 ) : (

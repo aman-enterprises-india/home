@@ -1,5 +1,4 @@
 import { slugField, type CollectionConfig } from "payload";
-import { formatSlug } from "../app/hooks/formatSlug";
 
 export const Categories: CollectionConfig = {
   slug: "categories",

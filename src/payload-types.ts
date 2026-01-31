@@ -201,7 +201,6 @@ export interface Product {
     };
     [k: string]: unknown;
   };
-  featured?: boolean | null;
   images?:
     | {
         image: number | Media;
@@ -215,14 +214,6 @@ export interface Product {
         id?: string | null;
       }[]
     | null;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -240,14 +231,6 @@ export interface Category {
   slug: string;
   description?: string | null;
   image?: (number | null) | Media;
-  meta?: {
-    title?: string | null;
-    description?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (number | null) | Media;
-  };
   updatedAt: string;
   createdAt: string;
 }
@@ -260,7 +243,6 @@ export interface Video {
   title: string;
   url: string;
   description?: string | null;
-  relatedProduct?: (number | null) | Product;
   updatedAt: string;
   createdAt: string;
 }
@@ -401,7 +383,6 @@ export interface ProductsSelect<T extends boolean = true> {
   category?: T;
   price?: T;
   description?: T;
-  featured?: T;
   images?:
     | T
     | {
@@ -414,13 +395,6 @@ export interface ProductsSelect<T extends boolean = true> {
         label?: T;
         value?: T;
         id?: T;
-      };
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -435,13 +409,6 @@ export interface CategoriesSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   image?: T;
-  meta?:
-    | T
-    | {
-        title?: T;
-        description?: T;
-        image?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
 }
@@ -453,7 +420,6 @@ export interface VideosSelect<T extends boolean = true> {
   title?: T;
   url?: T;
   description?: T;
-  relatedProduct?: T;
   updatedAt?: T;
   createdAt?: T;
 }

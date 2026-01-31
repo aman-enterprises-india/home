@@ -6,7 +6,6 @@ import { fileURLToPath } from "url";
 import sharp from "sharp";
 import { Users } from "./collections/Users";
 import { Media } from "./collections/Media";
-import { seoPlugin } from "@payloadcms/plugin-seo";
 import { Products } from "./collections/Products";
 import { Categories } from "./collections/Categories";
 import { Videos } from "./collections/Videos";
@@ -45,14 +44,4 @@ export default buildConfig({
     },
   }),
   sharp,
-  plugins: [
-    seoPlugin({
-      collections: ["products", "categories"],
-      uploadsCollection: "media",
-      generateTitle: ({ doc }) => `${doc?.title} | Aman Enterprises`,
-      generateDescription: ({ doc }) => doc?.description,
-      generateURL: ({ doc }) => `localhost:3000/products/${doc?.slug}`,
-      tabbedUI: true,
-    }),
-  ],
 });

@@ -1,5 +1,4 @@
 import { slugField, type CollectionConfig } from "payload";
-import { formatSlug } from "../app/hooks/formatSlug";
 
 export const Products: CollectionConfig = {
   slug: "products",
@@ -40,10 +39,6 @@ export const Products: CollectionConfig = {
       name: "description",
       type: "richText", // Uses the modern Lexical editor by default
       required: true,
-    },
-    {
-      name: "featured",
-      type: "checkbox",
     },
     {
       name: "images",
