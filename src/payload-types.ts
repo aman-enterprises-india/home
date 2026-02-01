@@ -182,8 +182,10 @@ export interface Product {
   generateSlug?: boolean | null;
   slug: string;
   category: number | Category;
+  mrp?: number | null;
+  discount?: number | null;
   /**
-   * Leave blank to show "Price on Request"
+   * Calculated Automatically from MRP and Discount
    */
   price?: number | null;
   description: {
@@ -381,6 +383,8 @@ export interface ProductsSelect<T extends boolean = true> {
   generateSlug?: T;
   slug?: T;
   category?: T;
+  mrp?: T;
+  discount?: T;
   price?: T;
   description?: T;
   images?:
@@ -471,14 +475,16 @@ export interface CompanySetting {
   id: number;
   siteTitle: string;
   GSTNo?: string | null;
+  MSMENo?: string | null;
   contactInfo?: {
     phone?: string | null;
     email?: string | null;
     address?: string | null;
   };
+  googleMapsLink?: string | null;
   socialLinks?:
     | {
-        platform?: ('LinkedIn' | 'Facebook' | 'YouTube' | 'Twitter') | null;
+        platform?: ('Facebook' | 'YouTube' | 'Instagram') | null;
         url?: string | null;
         id?: string | null;
       }[]
@@ -493,6 +499,7 @@ export interface CompanySetting {
 export interface CompanySettingsSelect<T extends boolean = true> {
   siteTitle?: T;
   GSTNo?: T;
+  MSMENo?: T;
   contactInfo?:
     | T
     | {
@@ -500,6 +507,7 @@ export interface CompanySettingsSelect<T extends boolean = true> {
         email?: T;
         address?: T;
       };
+  googleMapsLink?: T;
   socialLinks?:
     | T
     | {

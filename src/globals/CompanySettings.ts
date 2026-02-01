@@ -17,6 +17,10 @@ export const CompanySettings: GlobalConfig = {
       type: "text",
     },
     {
+      name: "MSMENo",
+      type: "text",
+    },
+    {
       name: "contactInfo",
       type: "group", // Groups fields together in the UI
       fields: [
@@ -35,13 +39,18 @@ export const CompanySettings: GlobalConfig = {
       ],
     },
     {
+      name: "googleMapsLink",
+      type: "text",
+      label: "Direct Google Maps Link",
+    },
+    {
       name: "socialLinks",
       type: "array",
       fields: [
         {
           name: "platform",
           type: "select",
-          options: ["LinkedIn", "Facebook", "YouTube", "Twitter"],
+          options: ["Facebook", "YouTube", "Instagram"],
         },
         {
           name: "url",

@@ -29,11 +29,44 @@ export const Products: CollectionConfig = {
       },
     },
     {
-      name: "price",
-      type: "number",
-      admin: {
-        description: 'Leave blank to show "Price on Request"',
-      },
+      type: "row",
+      fields: [
+        {
+          name: "mrp",
+          type: "number",
+          label: "MRP (₹)",
+          min: 0,
+        },
+        {
+          name: "discount",
+          type: "number",
+          label: "Discount (%)",
+          defaultValue: 0,
+          min: 0,
+          max: 100,
+        },
+        {
+          name: "price",
+          type: "number",
+          label: "Current Price (₹)",
+          admin: {
+            readOnly: true,
+            description: "Calculated Automatically from MRP and Discount",
+          },
+          hooks: {
+            beforeValidate: [
+              ({ data }) => {
+                if (data?.mrp) {
+                  const discountAmount =
+                    (data.mrp * (data.discount || 0)) / 100;
+                  return Math.round(data.mrp - discountAmount);
+                }
+                return undefined;
+              },
+            ],
+          },
+        },
+      ],
     },
     {
       name: "description",

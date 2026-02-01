@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/src/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
@@ -10,9 +10,13 @@ import { getPayload } from "payload";
 import config from '@payload-config';
 
 export const metadata: Metadata = {
-    title: "Contact Us",
-    description:
-        "Get in touch with us for inquiries, quotes, and support. We're here to help with all your electrical product needs.",
+    title: 'Contact Us',
+    description: 'Get in touch with Aman Enterprises for all your electrical product needs. Contact us for quotes, inquiries, and support.',
+    keywords: ['contact', 'get quote', 'electrical products inquiry', 'Aman Enterprises contact'],
+    openGraph: {
+        title: 'Contact Us - Aman Enterprises',
+        description: 'Get in touch with Aman Enterprises for all your electrical product needs.',
+    },
 };
 
 export default async function ContactPage() {
@@ -250,7 +254,7 @@ export default async function ContactPage() {
                                 </Button>
                                 {companyInfo?.contactInfo?.phone && companyInfo?.contactInfo?.phone.length > 0 && (
                                     <Button asChild className="w-full">
-                                        <a href={`tel:${companyInfo?.contactInfo.phone.split(',')[0]}`}>
+                                        <a href={`https://wa.me/${companyInfo?.contactInfo.phone.split(',')[0]}`} target="_blank" rel="noopener noreferrer">
                                             <Phone className="mr-2 h-4 w-4" />
                                             Call Now
                                         </a>

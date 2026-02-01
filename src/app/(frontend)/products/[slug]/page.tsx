@@ -1,40 +1,65 @@
-import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
-import { ProductCard } from "@/src/components/ProductCard";
-import { ArrowLeft, Phone, Package } from "lucide-react";
+import { ArrowLeft, Phone } from "lucide-react";
 import { getPayload } from "payload";
 import config from '@payload-config';
-import Gallery from "@/src/components/Gallery";
+import Gallery from "@/components/Gallery";
+import { Metadata } from "next";
 
 interface ProductPageProps {
     params: Promise<{ slug: string }>;
 }
 
+export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
+    const { slug } = await params;
+    const payload = await getPayload({ config });
+    const productRes = await payload.find({
+        collection: 'products',
+        where: {
+            slug: {
+                equals: slug,
+            }
+        },
+        depth: 2,
+    });
 
-// export async function generateMetadata({
-//     params,
-// }: ProductPageProps): Promise<Metadata> {
-//     const { slug } = await params;
-//     const product = ''
+    const product = productRes.docs[0];
 
-//     if (!product) {
-//         return {
-//             title: "Product Not Found",
-//         };
-//     }
+    if (!product) {
+        return {
+            title: 'Product Not Found',
+        };
+    }
 
-//     return {
-//         title: product.title,
-//         description:
-//             product.description || `View details for ${product.title}`,
-//     };
-// }
+    const description = product?.description?.root?.children?.[0]?.children?.[0]?.text ||
+        `Buy ${product.title} at best prices from Aman Enterprises. Quality electrical products with warranty.`;
+
+    return {
+        title: product.title,
+        description: description.substring(0, 160),
+        keywords: [product.title, product?.category?.name || 'electrical products', 'buy online', 'Aman Enterprises'],
+        openGraph: {
+            title: `${product.title} - Aman Enterprises`,
+            description: description.substring(0, 160),
+            type: 'website',
+            images: product?.images?.[0]?.image?.url ? [
+                {
+                    url: product.images[0].image.url,
+                    alt: product.title,
+                }
+            ] : [],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: product.title,
+            description: description.substring(0, 160),
+        },
+    };
+}
 
 export default async function ProductPage({ params }: ProductPageProps) {
     const { slug } = await params;
@@ -52,16 +77,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
     if (!product) {
         notFound();
     }
-
-    // Fetch related products if we have a category
-    // let relatedProducts = [];
-    // if (product.category?.id) {
-    //     relatedProducts = [];
-    // }
-
-    const mainImage =
-        product?.images && product?.images.length > 0
-            ? product?.images[0].image?.url : null;
 
     return (
         <div className="py-12">
@@ -89,9 +104,12 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         <h1 className="text-3xl font-bold md:text-4xl">{product?.title}</h1>
 
                         {product?.price !== undefined && (
-                            <p className="text-3xl font-bold text-primary">
-                                ₹{product?.price?.toLocaleString("en-IN")}
-                            </p>
+                            <div className="space-y-1">
+                                <p className="text-lg font-bold text-primary">
+                                    <span className="text-red-500 font-medium">-{product?.discount}%</span> ₹{product?.price?.toLocaleString("en-IN")}
+                                </p>
+                                <p className="font-light text-gray-600">MRP: ₹{product?.mrp?.toLocaleString("en-IN")}</p>
+                            </div>
                         )}
 
                         {product?.description && (

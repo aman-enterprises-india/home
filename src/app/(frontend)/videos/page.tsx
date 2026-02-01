@@ -1,13 +1,17 @@
 import { Metadata } from "next";
-import { VideoCard } from "@/src/components/VideoCard";
+import { VideoCard } from "@/components/VideoCard";
 import { Play } from "lucide-react";
 import { getPayload } from "payload";
 import config from '@payload-config';
 
 export const metadata: Metadata = {
-    title: "Videos",
-    description:
-        "Watch our product videos, tutorials, and demonstrations for electrical products.",
+    title: 'Videos',
+    description: 'Watch product demonstrations, tutorials, and informational videos about our electrical products and solutions.',
+    keywords: ['product videos', 'electrical product demos', 'tutorials', 'Aman Enterprises videos'],
+    openGraph: {
+        title: 'Videos - Aman Enterprises',
+        description: 'Watch product demonstrations and tutorials about our electrical products.',
+    },
 };
 
 

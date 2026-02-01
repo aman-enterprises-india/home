@@ -6,7 +6,7 @@ import { Product } from "../payload-types";
 
 
 
-export function ProductCard({ title, slug, images, category, price }: Product) {
+export function ProductCard({ title, slug, images, category, price, mrp, discount }: Product) {
     const imageUrl = images?.[0]?.image?.url;
 
     return (
@@ -36,9 +36,13 @@ export function ProductCard({ title, slug, images, category, price }: Product) {
                     {title}
                 </h3>
                 {price !== undefined && (
-                    <p className="mt-2 text-lg font-bold text-primary">
-                        ₹{price?.toLocaleString("en-IN")}
-                    </p>
+                    <div className="space-y-1">
+                        <p className="text-lg font-bold text-primary">
+                            <span className="text-red-500 font-medium">-{discount}%</span> ₹{price?.toLocaleString("en-IN")}
+                        </p>
+                        <p className="font-light text-gray-600">MRP: ₹{mrp?.toLocaleString("en-IN")}</p>
+                    </div>
+
                 )}
             </CardContent>
             <CardFooter className="p-4 pt-0">

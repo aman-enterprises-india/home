@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ProductCard } from "@/src/components/ProductCard";
+import { ProductCard } from "@/components/ProductCard";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Package } from "lucide-react";
@@ -8,28 +8,15 @@ import { getPayload } from "payload";
 import config from '@payload-config';
 
 export const metadata: Metadata = {
-    title: "Products",
-    description:
-        "Browse our complete catalog of quality electrical products, wires, cables, and accessories.",
+    title: 'Products',
+    description: 'Browse our complete range of quality electrical products including wires, switches, circuit breakers, and more. Find the best electrical solutions for your needs.',
+    keywords: ['electrical products', 'buy electrical items', 'wires', 'switches', 'circuit breakers', 'electrical equipment'],
+    openGraph: {
+        title: 'Products - Aman Enterprises',
+        description: 'Browse our complete range of quality electrical products.',
+    },
 };
 
-// interface Product {
-//     _id: string;
-//     title: string;
-//     slug: string;
-//     price?: number;
-//     images?: Array<{ asset: { _ref: string } }>;
-//     category?: { _id: string; name: string; slug: string };
-//     description?: string;
-//     featured?: boolean;
-// }
-
-// interface Category {
-//     _id: string;
-//     name: string;
-//     slug: string;
-//     description?: string;
-// }
 
 interface ProductsPageProps {
     searchParams: Promise<{ category?: string }>;
@@ -122,7 +109,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                 <div
                                     key={product.id}
                                 >
-                                    <ProductCard images={product.images} title={product.title} slug={product.slug} category={product.category} price={product.price} />
+                                    <ProductCard images={product.images} title={product.title} slug={product.slug} category={product.category} price={product.price} mrp={product?.mrp} discount={product?.discount} />
                                 </div>
                             ))}
                         </div>

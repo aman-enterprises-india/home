@@ -14,6 +14,8 @@ interface FooterProps {
     phone?: string | null;
     email?: string | null;
     address?: string | null;
+    gstNo?: string | null;
+    msmeNo?: string | null;
     socialLinks?: SocialLink[] | null;
 }
 
@@ -29,10 +31,12 @@ export function Footer({
     phone,
     email,
     address,
+    gstNo,
+    msmeNo,
     socialLinks = [],
 }: FooterProps) {
     return (
-        <footer className="border-t bg-muted/30">
+        <footer className="border-t shadow-inner">
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
                     {/* Company Info */}
@@ -104,6 +108,25 @@ export function Footer({
                         </ul>
                     </div>
 
+                    {/* Business Registration */}
+                    {(gstNo || msmeNo) && (
+                        <div className="space-y-4">
+                            <h3 className="font-semibold">Business Info</h3>
+                            <div className="space-y-2">
+                                {gstNo && (
+                                    <p className="text-sm text-muted-foreground">
+                                        <span className="font-medium">GST:</span> {gstNo}
+                                    </p>
+                                )}
+                                {msmeNo && (
+                                    <p className="text-sm text-muted-foreground">
+                                        <span className="font-medium">MSME:</span> {msmeNo}
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
                     {/* Social Links */}
                     {socialLinks && socialLinks.length > 0 && (
                         <div className="space-y-4">
@@ -115,7 +138,7 @@ export function Footer({
                                         href={social.url || '#'}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground"
+                                        className="inline-flex h-9 items-center justify-center rounded-md border px-3 text-sm font-medium transition-colors hover:bg-primary hover:text-white"
                                     >
                                         {social.platform}
                                     </a>
@@ -125,7 +148,7 @@ export function Footer({
                     )}
                 </div>
 
-                <Separator className="my-8" />
+                <Separator className="my-8 bg-nav-muted/30" />
 
                 <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
                     <p className="text-sm text-muted-foreground">
