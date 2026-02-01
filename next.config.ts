@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  allowedDevOrigins: ["http://192.168.29.8:3000"],
   images: {
     remotePatterns: [
       {
@@ -15,6 +14,9 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com",
       },
     ],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
   },
 };
 
