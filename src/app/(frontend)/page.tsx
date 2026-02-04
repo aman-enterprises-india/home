@@ -159,7 +159,16 @@ export default async function HomePage() {
                 <div
                   key={product.id}
                 >
-                  <ProductCard images={product.images} title={product.title} slug={product.slug} category={product.category} price={product.price} mrp={product?.mrp} discount={product?.discount} />
+                  <ProductCard
+                    images={product.images}
+                    title={product.title}
+                    slug={product.slug}
+                    category={product.category}
+                    price={product.price}
+                    mrp={product?.mrp}
+                    discount={product?.discount}
+                    gstRate={product?.gstRate}
+                  />
                 </div>
               ))}
             </div>

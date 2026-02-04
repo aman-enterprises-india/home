@@ -5,6 +5,7 @@ import config from '@payload-config';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import type { Metadata } from 'next';
+import Toploader from '@/components/Toploader';
 
 export async function generateMetadata(): Promise<Metadata> {
   const payload = await getPayload({ config });
@@ -54,6 +55,7 @@ export default async function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
+        <Toploader />
         <div className='flex min-h-screen flex-col'>
           <Header companyName={CompanyInfo.siteTitle} gstNo={CompanyInfo.GSTNo} />
           <main>{children}</main>

@@ -46,20 +46,37 @@ export const Products: CollectionConfig = {
           max: 100,
         },
         {
+          name: "gstRate",
+          type: "select",
+          label: "GST Rate (%)",
+          defaultValue: "18", // Standard for electrical panels
+          options: [
+            { label: "5%", value: "5" },
+            { label: "12%", value: "12" },
+            { label: "18%", value: "18" },
+            { label: "28%", value: "28" },
+          ],
+        },
+        {
           name: "price",
           type: "number",
           label: "Current Price (₹)",
           admin: {
             readOnly: true,
-            description: "Calculated Automatically from MRP and Discount",
+            description: "Calculated Automatically from MRP, Discount and Gst",
+            position: "sidebar",
           },
           hooks: {
             beforeValidate: [
               ({ data }) => {
                 if (data?.mrp) {
-                  const discountAmount =
-                    (data.mrp * (data.discount || 0)) / 100;
-                  return Math.round(data.mrp - discountAmount);
+                  const discount = data.discount || 0;
+                  const afterDiscount = data.mrp - (data.mrp * discount) / 100;
+
+                  const gst = parseInt(data.gstRate || "18");
+                  const total = afterDiscount + (afterDiscount * gst) / 100;
+
+                  return Math.round(total * 100) / 100;
                 }
                 return undefined;
               },

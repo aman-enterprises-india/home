@@ -6,6 +6,7 @@ import { Package } from "lucide-react";
 import Link from "next/link";
 import { getPayload } from "payload";
 import config from '@payload-config';
+import { ProductPagination } from "@/components/ProductPagination";
 
 export const metadata: Metadata = {
     title: 'Products',
@@ -19,16 +20,22 @@ export const metadata: Metadata = {
 
 
 interface ProductsPageProps {
-    searchParams: Promise<{ category?: string }>;
+    searchParams: Promise<{
+        page?: string,
+        category?: string,
+    }>;
 }
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+    const { category, page } = await searchParams;
+    const currentPage = parseInt(page || '1');
+
     const payload = await getPayload({ config });
 
     const productRes = await payload.find({
         collection: 'products',
         limit: 10,
-        pagination: true,
+        page: currentPage,
         sort: '-createdAt',
         depth: 2,
     })
@@ -40,8 +47,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     })
     const categories = categoryRes.docs;
     const products = productRes.docs;
-    const params = await searchParams;
-    const selectedCategory = params.category;
+    const selectedCategory = category;
 
 
     // Filter products by category if selected
@@ -109,7 +115,16 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                 <div
                                     key={product.id}
                                 >
-                                    <ProductCard images={product.images} title={product.title} slug={product.slug} category={product.category} price={product.price} mrp={product?.mrp} discount={product?.discount} />
+                                    <ProductCard
+                                        images={product.images}
+                                        title={product.title}
+                                        slug={product.slug}
+                                        category={product.category}
+                                        price={product.price}
+                                        mrp={product?.mrp}
+                                        discount={product?.discount}
+                                        gstRate={product?.gstRate}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -130,6 +145,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                         )}
                     </div>
                 )}
+
+                <ProductPagination
+                    currentPage={productRes.page}
+                    totalPages={productRes.totalPages}
+                />
             </div>
         </div>
     );

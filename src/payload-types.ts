@@ -184,8 +184,9 @@ export interface Product {
   category: number | Category;
   mrp?: number | null;
   discount?: number | null;
+  gstRate?: ('5' | '12' | '18' | '28') | null;
   /**
-   * Calculated Automatically from MRP and Discount
+   * Calculated Automatically from MRP, Discount and Gst
    */
   price?: number | null;
   description: {
@@ -385,6 +386,7 @@ export interface ProductsSelect<T extends boolean = true> {
   category?: T;
   mrp?: T;
   discount?: T;
+  gstRate?: T;
   price?: T;
   description?: T;
   images?:

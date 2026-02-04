@@ -78,6 +78,16 @@ export default async function ProductPage({ params }: ProductPageProps) {
         notFound();
     }
 
+    const basePrice = product?.price && product?.gstRate
+        ? product.price / (1 + parseInt(product?.gstRate) / 100)
+        : null;
+    const gstAmount = product?.price && basePrice
+        ? product.price - basePrice
+        : null;
+    const savings = product?.mrp && product?.price
+        ? product.mrp - product.price
+        : null;
+
     return (
         <div className="py-12">
             <div className="container mx-auto px-4">
@@ -103,13 +113,65 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
                         <h1 className="text-3xl font-bold md:text-4xl">{product?.title}</h1>
 
-                        {product?.price !== undefined && (
+                        {/* {product?.price !== undefined && (
                             <div className="space-y-1">
                                 <p className="text-lg font-bold text-primary">
                                     <span className="text-red-500 font-medium">-{product?.discount}%</span> ₹{product?.price?.toLocaleString("en-IN")}
                                 </p>
                                 <p className="font-light text-gray-600">MRP: ₹{product?.mrp?.toLocaleString("en-IN")}</p>
                             </div>
+                        )} */}
+
+
+
+                        {/* Price Details Section */}
+                        {product?.price !== undefined && (
+                            <Card className="bg-gray-50">
+                                <CardContent className="p-4 space-y-3">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-3xl font-bold text-primary">
+                                            ₹{product?.price?.toLocaleString("en-IN")}
+                                        </span>
+                                        {product?.discount && product?.discount > 0 && (
+                                            <Badge variant="destructive" className="text-sm">
+                                                {product?.discount}% OFF
+                                            </Badge>
+                                        )}
+                                    </div>
+
+                                    {product?.mrp && product?.price && product.mrp > product.price && (
+                                        <div className="flex items-center gap-2 text-gray-600">
+                                            <span>MRP:</span>
+                                            <span className="line-through decoration-gray-500">
+                                                ₹{product?.mrp?.toLocaleString("en-IN")}
+                                            </span>
+                                            {savings && savings > 0 && (
+                                                <span className="text-green-600 font-medium">
+                                                    (You save ₹{savings.toLocaleString("en-IN")})
+                                                </span>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {product?.gstRate !== undefined && (
+                                        <>
+                                            <Separator />
+                                            <div className="text-sm text-muted-foreground space-y-1">
+                                                <p className="font-medium">Price Breakdown:</p>
+                                                <div className="flex justify-between">
+                                                    <span>Base Price:</span>
+                                                    <span>₹{basePrice?.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>GST ({product.gstRate}%):</span>
+                                                    <span>₹{gstAmount?.toLocaleString("en-IN", { maximumFractionDigits: 2 })}</span>
+                                                </div>
+                                                <p className="text-xs pt-1">* Price inclusive of all taxes</p>
+                                            </div>
+                                        </>
+                                    )}
+                                </CardContent>
+                            </Card>
                         )}
 
                         {product?.description && (

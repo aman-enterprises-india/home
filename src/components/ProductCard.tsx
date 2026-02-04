@@ -6,7 +6,7 @@ import { Product } from "../payload-types";
 
 
 
-export function ProductCard({ title, slug, images, category, price, mrp, discount }: Product) {
+export function ProductCard({ title, slug, images, category, price, mrp, discount, gstRate }: Product) {
     const imageUrl = images?.[0]?.image?.url;
 
     return (
@@ -35,12 +35,19 @@ export function ProductCard({ title, slug, images, category, price, mrp, discoun
                 <h3 className="font-semibold line-clamp-2 group-hover:text-primary transition-colors">
                     {title}
                 </h3>
-                {price !== undefined && (
+                {price && price !== undefined && (
                     <div className="space-y-1">
                         <p className="text-lg font-bold text-primary">
-                            <span className="text-red-500 font-medium">-{discount}%</span> ₹{price?.toLocaleString("en-IN")}
+                            {discount && discount > 0 && (<span className="text-red-500 font-medium">-{discount}%</span>)} ₹{price?.toLocaleString("en-IN")}
                         </p>
-                        <p className="font-light text-gray-600">MRP: ₹{mrp?.toLocaleString("en-IN")}</p>
+                        {mrp && mrp > price && (
+                            <p className="text-sm text-gray-500">
+                                MRP: <span className="line-through">₹{mrp?.toLocaleString("en-IN")}</span>
+                            </p>
+                        )}
+                        {gstRate && gstRate !== undefined && (
+                            <p className="text-xs text-muted-foreground">(Incl. of {gstRate}% GST)</p>
+                        )}
                     </div>
 
                 )}
