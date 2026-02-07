@@ -9,6 +9,7 @@ import { getPayload } from "payload";
 import config from '@payload-config';
 import Gallery from "@/components/Gallery";
 import { Metadata } from "next";
+import { Richtext } from "@/components/Richtext";
 
 interface ProductPageProps {
     params: Promise<{ slug: string }>;
@@ -177,9 +178,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
                         {product?.description && (
                             <div>
                                 <h2 className="font-semibold mb-2">Description</h2>
-                                <p className="text-muted-foreground whitespace-pre-line">
+                                {/* <p className="text-muted-foreground whitespace-pre-line">
                                     {product?.description.root.children[0].children[0].text}
-                                </p>
+                                </p> */}
+                                <Richtext content={product?.description} />
                             </div>
                         )}
 
